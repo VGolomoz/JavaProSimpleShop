@@ -12,13 +12,13 @@ public class User {
     @Column
     private Long id;
 
-    @Column
+    @Column(nullable = false)
     private String role;
 
-    @Column
+    @Column(nullable = false)
     private String login;
 
-    @Column
+    @Column(nullable = false)
     private String password;
 
     public User() {
