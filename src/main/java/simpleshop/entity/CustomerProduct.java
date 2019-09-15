@@ -4,8 +4,11 @@ import javax.persistence.*;
 
 @Entity
 @Table
-public class ProductList {
+public class CustomerProduct {
+
+    @Id
+    private Long id;
 
     @Column
-    private Long customerId;
+    private product;
 }

@@ -1,11 +1,13 @@
 package simpleshop.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table
+@Table(name = "order")
 public class Order {
 
     @Id
@@ -22,8 +24,9 @@ public class Order {
     @Column
     private String deliveryAddress;
 
-    @ManyToOne
-    private ProductList productList;
+    @OneToOne(mappedBy = "order",
+                cascade = CascadeType.ALL)
+    private CustomerProduct customerProduct;
 
     @Column
     @GeneratedValue (generator = "false")
@@ -64,6 +67,14 @@ public class Order {
         this.deliveryAddress = deliveryAddress;
     }
 
+    public CustomerProduct getCustomerProduct() {
+        return customerProduct;
+    }
+
+    public void setCustomerProduct(CustomerProduct customerProduct) {
+        this.customerProduct = customerProduct;
+    }
+
     public Boolean getOrederStatus() {
         return orederStatus;
     }
@@ -81,12 +92,13 @@ public class Order {
                 Objects.equals(customerId, order.customerId) &&
                 Objects.equals(orderDate, order.orderDate) &&
                 Objects.equals(deliveryAddress, order.deliveryAddress) &&
+                Objects.equals(customerProduct, order.customerProduct) &&
                 Objects.equals(orederStatus, order.orederStatus);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, customerId, orderDate, deliveryAddress, orederStatus);
+        return Objects.hash(id, customerId, orderDate, deliveryAddress, customerProduct, orederStatus);
     }
 
     @Override
@@ -96,6 +108,7 @@ public class Order {
                 ", customerId=" + customerId +
                 ", orderDate=" + orderDate +
                 ", deliveryAddress='" + deliveryAddress + '\'' +
+                ", customerProduct=" + customerProduct +
                 ", orederStatus=" + orederStatus +
                 '}';
     }
