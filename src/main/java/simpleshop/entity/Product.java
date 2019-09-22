@@ -1,15 +1,14 @@
 package simpleshop.entity;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 @Entity
-@Table
+@Table(name = "product")
 public class Product  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column
+    @Column(name = "id")
     private Long id;
 
     @Column(nullable = false)
@@ -17,6 +16,10 @@ public class Product  {
 
     @Column (nullable = false)
     private String price;
+
+    @ManyToOne
+    @JoinColumn(name = "order_id")
+    private Order order;
 
     public Product() {
     }
@@ -50,27 +53,11 @@ public class Product  {
         this.price = price;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Product)) return false;
-        Product product = (Product) o;
-        return id.equals(product.id) &&
-                name.equals(product.name) &&
-                price.equals(product.price);
+    public Order getOrder() {
+        return order;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, price);
-    }
-
-    @Override
-    public String toString() {
-        return "Product{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", price='" + price + '\'' +
-                '}';
+    public void setOrder(Order order) {
+        this.order = order;
     }
 }
