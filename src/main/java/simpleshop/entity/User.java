@@ -4,21 +4,21 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table
+@Table(name = "user")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column
+    @Column(name = "id")
     private Long id;
 
-    @Column(nullable = false)
+    @Column
     private String role;
 
-    @Column(nullable = false)
+    @Column
     private String login;
 
-    @Column(nullable = false)
+    @Column
     private String password;
 
     public User() {
@@ -65,12 +65,12 @@ public class User {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof User)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return id.equals(user.id) &&
-                role.equals(user.role) &&
-                login.equals(user.login) &&
-                password.equals(user.password);
+        return Objects.equals(id, user.id) &&
+                Objects.equals(role, user.role) &&
+                Objects.equals(login, user.login) &&
+                Objects.equals(password, user.password);
     }
 
     @Override
