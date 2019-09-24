@@ -2,6 +2,7 @@ package simpleshop.controller;
 
 
 import simpleshop.service.Autorization;
+import simpleshop.service.DAO;
 import simpleshop.utility.FillDB;
 
 import javax.servlet.ServletException;
@@ -21,20 +22,18 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("Get method from Login Servlet");
+        System.out.println("Get method from Login Servlet"); // for log
         resp.sendRedirect("login.jsp");
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("Post method from Login Servlet");
-        new Autorization().autorization(req.getParameter("login"), req.getParameter("password"));
-        req.getSession().setAttribute("wrong", "Wrong login and/or password");
-        resp.sendRedirect("login.jsp");
+        System.out.println("Post method from Login Servlet"); // for log
+        String result = new Autorization(DAO.getInstance()).autorization(req.getParameter("login"), req.getParameter("password"));
 
-//        if (req.getParameter("login").equals("client")) resp.sendRedirect("client.jsp");
-//        if (req.getParameter("password").equals("manager")) resp.sendRedirect("manager.jsp");
-//        else req.setAttribute("wrong", "Wrong login and/or password");
-
+        if (result.equals("wrong")) {
+            req.getSession().setAttribute("wrong", "Wrong login and/or password");
+            resp.sendRedirect("login.jsp");
+        } else req.getRequestDispatcher(result).forward(req, resp);
     }
 }

@@ -52,6 +52,11 @@
       <version>2.3.3</version>
       <scope>provided</scope>
     </dependency>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>jstl</artifactId>
+      <version>1.2</version>
+    </dependency>
   </dependencies>
 
   <build>
@@ -73,13 +78,6 @@
           <port>8080</port>
           <path>/</path>
         </configuration>
-        <dependencies>
-          <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>jstl</artifactId>
-            <version>1.2</version>
-          </dependency>
-        </dependencies>
       </plugin>
     </plugins>
   </build>
